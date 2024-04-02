@@ -13,7 +13,11 @@ export default function ShowInfo() {
     const route = useRoute();
     const navigation = useNavigation();
     const [id, setId] = useState(route.params.id - 1);
-
+    useEffect(() => {
+        if (id < 0 || id >= todos.length) {
+            setId(Math.max(0, todos.length - 1));
+        }
+    }, [id, todos.length]);
     const todo = todos[id];
     return (
         <SafeAreaView>
@@ -26,7 +30,7 @@ export default function ShowInfo() {
                                     source={require("../assets/back.png")}
                                 />
                             </TouchableOpacity>
-                            <Text style={styles.headerText}>Add Todo</Text>
+                            <Text style={styles.headerText}>{todo.title}</Text>
                             <View style={{ width: Swidth * 0.057, }}></View>
                         </View>
                         <View style={styles.infoContainer}>  
